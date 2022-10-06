@@ -7,6 +7,9 @@ edition = "2021"
 [dependencies]
 near-sdk = "4.0.0"
 
+[lib]
+crate-type = ["cdylib"]
+
 [profile.release]
 codegen-units = 1
 # Tell `rustc` to optimize for small code size.
