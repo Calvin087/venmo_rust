@@ -2,13 +2,10 @@
 name = "venmo_rust"
 version = "0.1.0"
 authors = ["meh"]
-edition = "2018"
-
-[lib]
-crate-type = ["cdylib", "rlib"]
+edition = "2021"
 
 [dependencies]
-near-sdk = "3.1.0"
+near-sdk = "4.0.0"
 
 [profile.release]
 codegen-units = 1

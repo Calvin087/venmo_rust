@@ -1,7 +1,8 @@
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::collections::LookupMap;
-use near_sdk::{env, near_bindgen, setup_alloc, AccountId, Promise};
+use near_sdk::{env, near_bindgen, AccountId, Promise};
 // We can use String for AccountId, but we're importing it so use it.
+
 
 #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize)]
@@ -33,13 +34,13 @@ impl Welcome {
         let account_id = env::signer_account_id();
         // last ID of the person that signed a transaction, initiator of call
 
-        let contains_user = self.memo.contains_key(&account_id);
+        let contains_user = self.memo.contains_key(&account_id.to_string());
         // checks the lookup map for the key "account"
         // checking if the user exists in the lookup map.
         // returns bool
 
         if contains_user {
-            let mut temp_list = match self.memo.get(&account_id){
+            let mut temp_list = match self.memo.get(&account_id.to_string()){
                 Some(x) => x, // x is the [] of memos owned by account_id
                 None => vec![]
             };
@@ -47,10 +48,10 @@ impl Welcome {
             temp_list.push(memo_text + " || " + &price+"NEAR");
             // requires an owned string on the left for concatenation
 
-            self.memo.insert(&account_id, &temp_list);
+            self.memo.insert(&account_id.to_string(), &temp_list);
         } else {
             let initiate_vector = vec![memo_text + " || " + &price+"NEAR"];
-            self.memo.insert(&account_id, &initiate_vector);
+            self.memo.insert(&account_id.to_string(), &initiate_vector);
         }
 
     }
