@@ -45,12 +45,12 @@ impl Welcome {
                 None => vec![]
             };
 
-            temp_list.push(memo_text + " || " + &price+"NEAR");
+            temp_list.push(memo_text + "|" + &price+" NEAR");
             // requires an owned string on the left for concatenation
 
             self.memo.insert(&account_id.to_string(), &temp_list);
         } else {
-            let initiate_vector = vec![memo_text + " || " + &price+"NEAR"];
+            let initiate_vector = vec![memo_text + "|" + &price+" NEAR"];
             self.memo.insert(&account_id.to_string(), &initiate_vector);
         }
 
