@@ -6,7 +6,7 @@ import {
   utils as nearUtils
 } from "near-api-js";
 
-export const CONTRACT_ID = ""; // empty string works null doesn't
+export const CONTRACT_ID = "venmo2.ctorra.testnet"; // empty string works null doesn't
 const NETWORK = process.env.NEXT_PUBLIC_NETWORK;
 const NETWORK_URL_BASE =
   process.env.NEXT_PUBLIC_NETWORK === "mainnet"
@@ -42,7 +42,7 @@ export const signOut = () => {
 // GENERIC VIEW METHODS
 // =====================
 
-export const viewFunction = async ({
+export const contractViewFunction = async ({
   contractID = CONTRACT_ID,
   functionName,
   args = {}
@@ -58,19 +58,21 @@ export const viewFunction = async ({
 // GENERIC CALL METHODS (CHANGE METHODS)
 // =====================
 
-export const callFunction = async ({
-  contractID,
+export const contractCallFunction = async ({
+  contractID = CONTRACT_ID,
   functionName,
   args = {},
   deposit = "0"
 }) => {
-  const result = await wallet.account().functionCall({
+  console.log("starting");
+  const transaction = await wallet.account().functionCall({
     contractId: contractID,
     methodName: functionName,
-    args: args
-    // attachedDeposit: utils.format.parseNearAmount("0.001")
+    args: args,
+    attachedDeposit: utils.format.parseNearAmount(deposit)
     // Some methods don't take deposits and fail if you send one.
   });
-  console.log("blah");
-  return result;
+
+  console.log("done");
+  return transaction;
 };

@@ -1,23 +1,17 @@
 import { useForm } from "react-hook-form";
-import { callFunction, viewFunction } from "../near/near-setup";
+import { contractCallFunction, contractViewFunction } from "../near/near-setup";
 
-const Form = () => {
+const Form = ({ postToBlockchain }) => {
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm();
 
+  // Sending data to the blockchain working.
+
   const onSubmit = async (data) => {
-    const res = await callFunction({
-      contractID: "venmo2.ctorra.testnet",
-      functionName: "add_memo",
-      args: {
-        memo_text: "this is a test from backend",
-        price: "2"
-      }
-    });
-    console.log(res);
+    postToBlockchain(data);
   };
 
   return (

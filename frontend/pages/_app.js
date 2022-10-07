@@ -9,7 +9,8 @@ function MyApp({ Component, pageProps }) {
     initNear();
     setIsLoading(false);
   }, []);
-  return <Component {...pageProps} />;
+
+  return isLoading ? <>Loading</> : <Component {...pageProps} />;
 }
 
 export default MyApp;
