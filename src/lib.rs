@@ -45,12 +45,12 @@ impl Welcome {
                 None => vec![]
             };
 
-            temp_list.push(memo_text + "|" + &price+" NEAR");
+            temp_list.push(memo_text + " | " + &price+" NEAR");
             // requires an owned string on the left for concatenation
 
             self.memo.insert(&account_id.to_string(), &temp_list);
         } else {
-            let initiate_vector = vec![memo_text + "|" + &price+" NEAR"];
+            let initiate_vector = vec![memo_text + " | " + &price+" NEAR"];
             self.memo.insert(&account_id.to_string(), &initiate_vector);
         }
 
@@ -75,3 +75,32 @@ impl Welcome {
 
 }
 // https://youtu.be/zy5VgigLy-Y?t=978
+
+#[cfg(test)]
+mod test{
+    use near_sdk::test_utils::{accounts, VMContextBuilder};
+    use near_sdk::{testing_env, log};
+    use std::collections::{HashMap};
+    use super::*;
+
+    fn get_context(predecessor_account_id: AccountId) -> VMContextBuilder {
+        let mut builder = VMContextBuilder::new();
+        builder
+            .current_account_id(accounts(0))
+            .signer_account_id(predecessor_account_id.clone())
+            .predecessor_account_id(predecessor_account_id);
+        builder
+    }
+
+    #[test]
+    fn add_fetch_memos(){
+        let mut context = get_context(accounts(0));
+        testing_env!(context.build());
+        let mut contract = Welcome::default();
+        contract.add_memo(String::from("Memo goes here"), String::from("300"));
+        let fetchMemo = contract.get_memos(accounts(0).to_string());
+        log!("{:?}", fetchMemo)
+    }
+}
+
+// cargo test -- --show-output
