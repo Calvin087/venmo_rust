@@ -32,14 +32,16 @@ export default function Home() {
   }, []);
 
   const postToBlockchain = async (data) => {
-    await contractCallFunction({
+    let transaction = await contractCallFunction({
       functionName: "add_memo",
       args: {
         memo_text: data.message,
         price: data.amount
       }
     });
-    window.location.reload();
+
+    console.log(transaction);
+    // window.location.reload();
   };
 
   return (
