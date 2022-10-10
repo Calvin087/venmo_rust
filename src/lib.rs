@@ -14,11 +14,14 @@ pub struct Welcome {
 impl Default for Welcome {
     fn default() -> Self {
         Self {
-            memo: LookupMap::new(b"memo".to_vec())
+            memo: LookupMap::new(b"m",)
             /* 
                 When declaring b before the string, we're
                 literally sending bytes to the blockchain.
                 memo.to_vec === [109, 101, 109, 111]
+
+                ALSO it seems we can just pass in any byte, m/r/b etc
+                but we need 1 argument?
             */
         }
     }
